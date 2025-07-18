@@ -1,10 +1,6 @@
 # ImageCipher - CLI-based Image Encryption Tool
 
-**ImageCipher** is a powerful command-line tool for se## Contributing
-
-Contributions are welcome! If you'd like to report an issue, suggest an improvement, or contribute code, please open a pull request or an issue on the [GitHub repository](https://github.com/AdityaKrSingh26/ImageCipher).
-
----y encrypting and decrypting images using XOR encryption. With easy-to-use commands, ImageCipher allows you to encrypt any supported image file and later decrypt it using the key generated during the encryption process. ImageCipher supports both PNG and JPEG formats, and is a simple yet effective way to safeguard your images.
+**ImageCipher** is a powerful command-line tool for securely encrypting and decrypting images using XOR encryption. With easy-to-use commands, ImageCipher allows you to encrypt any supported image file and later decrypt it using the key generated during the encryption process. ImageCipher supports both PNG and JPEG formats, and is a simple yet effective way to safeguard your images.
 
 ## Table of Contents
 
