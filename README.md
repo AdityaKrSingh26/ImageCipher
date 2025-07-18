@@ -73,7 +73,7 @@ ImageCipher supports a range of commands, outlined below:
 To encrypt an image file:
 
 ```bash
-pixeldust --encrypt <image_path> --outputImageFileName <output_image> --outputKeyFileName <key_file>
+imagecipher --encrypt <image_path> --outputImageFileName <output_image> --outputKeyFileName <key_file>
 ```
 
 - `<image_path>`: Path to the image you want to encrypt.
@@ -82,7 +82,7 @@ pixeldust --encrypt <image_path> --outputImageFileName <output_image> --outputKe
 
 **Example**:
 ```bash
-pixeldust --encrypt myImage.png --outputImageFileName encryptedImage.png --outputKeyFileName myKey.key
+imagecipher --encrypt myImage.png --outputImageFileName encryptedImage.png --outputKeyFileName myKey.key
 ```
 
 ### Decrypt an Image
@@ -90,7 +90,7 @@ pixeldust --encrypt myImage.png --outputImageFileName encryptedImage.png --outpu
 To decrypt an encrypted image file:
 
 ```bash
-pixeldust --decrypt <encrypted_image_path> --key <key_file> --outputImageFileName <decrypted_image>
+imagecipher --decrypt <encrypted_image_path> --key <key_file> --outputImageFileName <decrypted_image>
 ```
 
 - `<encrypted_image_path>`: Path to the encrypted image file.
@@ -99,7 +99,7 @@ pixeldust --decrypt <encrypted_image_path> --key <key_file> --outputImageFileNam
 
 **Example**:
 ```bash
-pixeldust --decrypt encryptedImage.png --key myKey.key --outputImageFileName decryptedImage.png
+imagecipher --decrypt encryptedImage.png --key myKey.key --outputImageFileName decryptedImage.png
 ```
 
 ## Limitations
