@@ -90,7 +90,7 @@ imagecipher --batch ./photos --operation encrypt --recursive --password "myPassw
 **Batch Features:**
 - Supports PNG, JPG, JPEG formats
 - Continues processing even if individual files fail
-- Shows progress: "✔ Batch Processing Complete: 15 successful, 2 failed"
+- Shows progress: "Batch Processing Complete: 15 successful, 2 failed"
 - Provides detailed error reports for failed files
 
 ### Image Analysis
@@ -173,7 +173,7 @@ Color Profile: sRGB
 - **Storage**: Base64-encoded key files
 
 
-## 🧪 Manual Testing
+## Manual Testing
 
 ```bash
 # Test basic functionality
