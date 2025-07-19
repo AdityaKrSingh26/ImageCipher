@@ -1,8 +1,8 @@
-# 🎨 ImageCipher - Advanced Image Encryption CLI
+# ImageCipher - Advanced Image Encryption CLI
 
 **ImageCipher** is a powerful command-line tool for securely encrypting and decrypting images. Built with Node.js and function-based architecture for optimal performance and security.
 
-## 🚀 What is ImageCipher?
+## What is ImageCipher?
 
 ImageCipher provides encryption for your images using:
 - **AES-256-GCM encryption** with password-based key derivation
@@ -12,17 +12,17 @@ ImageCipher provides encryption for your images using:
 
 Perfect for securing personal photos, business documents, medical images, and any visual content requiring protection.
 
-## ✨ Key Features
+## Key Features
 
-- 🔐 **Multiple Encryption Methods**: AES-256-GCM and XOR encryption
-- 📦 **Batch Processing**: Encrypt/decrypt entire directories with subdirectory support
-- 🎯 **Interactive Mode**: Step-by-step wizard for beginners
-- 🔍 **Image Analysis**: Metadata and security assessment tools
-- 🛡️ **Advanced Security**: PBKDF2 key derivation, unique salts, authentication tags
-- ⚡ **High Performance**: Function-based architecture, reduced memory footprint
-- 🔧 **Cross-Platform**: Works on Windows, macOS, and Linux
+- **Multiple Encryption Methods**: AES-256-GCM and XOR encryption
+- **Batch Processing**: Encrypt/decrypt entire directories with subdirectory support
+- **Interactive Mode**: Step-by-step wizard for beginners
+- **Image Analysis**: Metadata and security assessment tools
+- **Advanced Security**: PBKDF2 key derivation, unique salts, authentication tags
+- **High Performance**: Function-based architecture, reduced memory footprint
+- **Cross-Platform**: Works on Windows, macOS, and Linux
 
-## 📦 Installation
+## Installation
 
 ```bash
 # Global installation (recommended)
@@ -34,7 +34,7 @@ cd ImageCipher
 npm install
 ```
 
-## 🎯 Quick Start
+## Quick Start
 
 ### Interactive Mode (Recommended for beginners)
 ```bash
@@ -113,7 +113,7 @@ Entropy: 7.23
 Color Profile: sRGB
 ```
 
-## 🎛️ Command-Line Reference
+## Command-Line Reference
 
 ### Core Commands
 
@@ -160,7 +160,7 @@ Color Profile: sRGB
 | `--clear` | `-c` | Clear console before running | `--clear` |
 | `--noClear` | | Don't clear console | `--noClear` |
 
-## 🔒 Security Features
+## Security Features
 
 ### Password-Based Encryption (Recommended)
 - **Algorithm**: AES-256-GCM 
@@ -188,7 +188,7 @@ imagecipher --batch test_images --operation encrypt --password "batch123"
 imagecipher --analyze test.jpg
 ```
 
-## 🛠️ Development
+## Development
 
 ```bash
 # Clone and setup
