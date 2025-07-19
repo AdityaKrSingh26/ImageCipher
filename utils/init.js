@@ -5,7 +5,7 @@ import unhandled from 'cli-handle-unhandled';
 export default ({ clear = true }) => {
 	unhandled();
 	welcome({
-		title: `pixelDust`,
+		title: `imageCipher`,
 		tagLine: `Welcome to Image Encryption CLI`,
 		description: pkg.description,
 		version: pkg.version,

@@ -1,27 +1,30 @@
 {
-	"name": "pixeldust",
-	"description": "An image encryption node-js cli",
-	"version": "1.0.1",
-	"license": "MIT",
+	"name": "imagecipher",
+	"description": "Advanced image encryption CLI tool with multiple algorithms and batch processing",
+	"version": "2.0.0",
 	"type": "module",
 	"bin": {
 		"imagecipher": "index.js"
 	},
 	"keywords": [
-		"pixeldust",
+		"imagecipher",
 		"encrypt",
 		"decrypt",
 		"cryptography",
 		"image",
 		"nodejs",
-		"cli"
+		"cli",
+		"batch-processing",
+		"password-encryption",
+		"security"
 	],
 	"files": [
 		"index.js",
 		"utils"
 	],
 	"scripts": {
-		"format": "prettier --write \"./**/*.{js,json}\""
+		"format": "prettier --write \"./**/*.{js,json}\"",
+		"test": "node --experimental-modules test/test.js"
 	},
 	"dependencies": {
 		"chalk": "^5.0.0",
@@ -32,7 +35,11 @@
 		"cli-welcome": "^2.2.2",
 		"jimp": "^0.16.1",
 		"meow": "^9.0.0",
-		"ora": "^6.0.1"
+		"ora": "^6.0.1",
+		"sharp": "^0.32.6",
+		"commander": "^9.4.1",
+		"progress": "^2.0.3",
+		"inquirer": "^8.2.6"
 	},
 	"devDependencies": {
 		"prettier": "^2.5.1"
