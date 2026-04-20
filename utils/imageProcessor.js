@@ -1,17 +1,12 @@
+import sharp from 'sharp';
 import path from 'path';
-import fs from 'fs';
 
-// Default options for image processing
 const DEFAULT_IMAGE_OPTIONS = {
 	outputFormat: null,
 	quality: 90,
 	compression: 6,
 	preserveMetadata: false
 };
-
-function calculateEntropy(stats) {
-	return 0; // Placeholder
-}
 
 function generateImageOutputPath(inputPath, format) {
 	const parsed = path.parse(inputPath);
@@ -20,46 +15,41 @@ function generateImageOutputPath(inputPath, format) {
 }
 
 async function analyzeImage(imagePath, options = DEFAULT_IMAGE_OPTIONS) {
-	try {
-		// Basic file analysis without Sharp
-		const stats = fs.statSync(imagePath);
-		const ext = path.extname(imagePath).toLowerCase();
+	const image = sharp(imagePath);
+	const [metadata, stats] = await Promise.all([image.metadata(), image.stats()]);
 
-		return {
-			metadata: {
-				format: ext.slice(1),
-				size: stats.size,
-				channels: 'unknown',
-				space: 'unknown',
-				width: 'unknown',
-				height: 'unknown'
-			},
-			stats: {
-				channels: []
-			},
-			entropy: 0,
-			colorProfile: 'None'
-		};
-	} catch (error) {
-		console.log('Note: Install Sharp for advanced image analysis');
-		return {
-			metadata: { format: 'unknown', size: 0 },
-			stats: { channels: [] },
-			entropy: 0,
-			colorProfile: 'None'
-		};
-	}
+	const entropy = stats.channels.reduce((sum, ch) => sum + ch.entropy, 0) / stats.channels.length;
+	const colorProfile = metadata.icc ? 'ICC' : metadata.space || 'None';
+
+	return {
+		metadata: {
+			format: metadata.format,
+			size: metadata.size,
+			channels: metadata.channels,
+			space: metadata.space,
+			width: metadata.width,
+			height: metadata.height
+		},
+		stats,
+		entropy,
+		colorProfile
+	};
 }
 
 async function convertImageFormat(inputPath, outputFormat, options = {}) {
-	console.log(`Note: Format conversion requires Sharp. Install with: npm install sharp`);
-	return inputPath;
+	const outputPath = generateImageOutputPath(inputPath, outputFormat);
+	const quality = options.quality || DEFAULT_IMAGE_OPTIONS.quality;
+
+	await sharp(inputPath)
+		.toFormat(outputFormat, { quality })
+		.toFile(outputPath);
+
+	return outputPath;
 }
 
 export {
 	analyzeImage,
 	convertImageFormat,
 	generateImageOutputPath,
-	calculateEntropy,
 	DEFAULT_IMAGE_OPTIONS
 };

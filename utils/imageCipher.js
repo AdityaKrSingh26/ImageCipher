@@ -1,6 +1,6 @@
 import fs from 'fs';
 import crypto from 'crypto';
-import jimp from 'jimp';
+import sharp from 'sharp';
 import path from 'path';
 import { encryptWithPassword, decryptWithPassword, generateSecurePassword } from './passwordEncryption.js';
 import { analyzeImage, convertImageFormat } from './imageProcessor.js';
@@ -60,38 +60,25 @@ async function decryptWithPasswordMethod(inputPath, outputPath = null, options =
 
 async function encryptWithXOR(inputPath, outputPath = null, options = {}) {
 	try {
-		// Read image with jimp
-		const image = await jimp.read(inputPath);
-		const extension = image.getExtension();
+		const { data, info } = await sharp(inputPath).raw().toBuffer({ resolveWithObject: true });
+		const length = data.length;
 
-		// Get RGBA data
-		const rgba = image.bitmap.data;
-		const length = rgba.length;
+		const key = crypto.randomBytes(length);
 
-		// Generate random key
-		const key = [];
 		for (let i = 0; i < length; i++) {
-			key.push(Math.floor(Math.random() * 256));
+			data[i] = data[i] ^ key[i];
 		}
 
-		// Encrypt pixels with XOR
-		for (let i = 0; i < length; i++) {
-			rgba[i] = rgba[i] ^ key[i];
-		}
-
-		// Update image data
-		image.bitmap.data = rgba;
-
-		// Generate output paths
+		const ext = path.extname(inputPath).slice(1) || 'png';
 		const baseName = path.basename(inputPath, path.extname(inputPath));
-		const finalOutputPath = outputPath || `${baseName}_encrypted.${extension}`;
+		const finalOutputPath = outputPath || `${baseName}_encrypted.${ext}`;
 		const keyPath = options.keyPath || `${baseName}_key.txt`;
 
-		// Save encrypted image
-		await image.writeAsync(finalOutputPath);
+		await sharp(data, { raw: { width: info.width, height: info.height, channels: info.channels } })
+			.toFormat(ext)
+			.toFile(finalOutputPath);
 
-		// Save key
-		fs.writeFileSync(keyPath, Buffer.from(key).toString('base64'));
+		fs.writeFileSync(keyPath, key.toString('base64'));
 
 		return {
 			outputPath: finalOutputPath,
@@ -105,44 +92,34 @@ async function encryptWithXOR(inputPath, outputPath = null, options = {}) {
 
 async function decryptWithXOR(inputPath, outputPath = null, options = {}) {
 	try {
-		// Read encrypted image
-		const image = await jimp.read(inputPath);
-		const extension = image.getExtension();
-		const rgba = image.bitmap.data;
-		const length = rgba.length;
+		const { data, info } = await sharp(inputPath).raw().toBuffer({ resolveWithObject: true });
+		const length = data.length;
 
-		// Read and decode key
 		if (!options.keyPath && !options.key) {
 			throw new Error('Key file path or key is required for XOR decryption');
 		}
 
-		let keyArray;
+		let keyBuffer;
 		if (options.keyPath) {
-			const keyBase64 = fs.readFileSync(options.keyPath, 'utf8');
-			const keyBuffer = Buffer.from(keyBase64, 'base64');
-			keyArray = Array.from(keyBuffer);
+			keyBuffer = Buffer.from(fs.readFileSync(options.keyPath, 'utf8'), 'base64');
 		} else {
-			keyArray = options.key;
+			keyBuffer = Buffer.isBuffer(options.key) ? options.key : Buffer.from(options.key);
 		}
 
-		// Validate key length
-		if (keyArray.length !== length) {
+		if (keyBuffer.length !== length) {
 			throw new Error('Key length does not match image data length');
 		}
 
-		// Decrypt pixels with XOR
 		for (let i = 0; i < length; i++) {
-			rgba[i] = rgba[i] ^ keyArray[i];
+			data[i] = data[i] ^ keyBuffer[i];
 		}
 
-		// Update image data
-		image.bitmap.data = rgba;
-
-		// Generate output path
+		const ext = path.extname(inputPath).slice(1) || 'png';
 		const finalOutputPath = outputPath || generateOutputPath(inputPath, '_decrypted');
 
-		// Save decrypted image
-		await image.writeAsync(finalOutputPath);
+		await sharp(data, { raw: { width: info.width, height: info.height, channels: info.channels } })
+			.toFormat(ext)
+			.toFile(finalOutputPath);
 
 		return {
 			outputPath: finalOutputPath,
