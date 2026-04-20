@@ -8,13 +8,13 @@ const stat = promisify(fs.stat);
 // Default options for batch processing
 const DEFAULT_BATCH_OPTIONS = {
 	recursive: false,
-	filter: ['*.png', '*.jpg', '*.jpeg', '*.bmp', '*.gif'],
+	filter: ['*.png', '*.jpg', '*.jpeg', '*.bmp', '*.gif', '*.webp'],
 	outputDir: null
 };
 
 function isImageFile(filename) {
 	const ext = path.extname(filename).toLowerCase();
-	const allowedExts = ['.png', '.jpg', '.jpeg', '.bmp', '.gif'];
+	const allowedExts = ['.png', '.jpg', '.jpeg', '.bmp', '.gif', '.webp'];
 	return allowedExts.includes(ext);
 }
 
