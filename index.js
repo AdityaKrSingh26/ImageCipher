@@ -2,9 +2,7 @@
 
 import init from './utils/init.js';
 import cli from './utils/cli.js';
-import encrypt from './utils/encrypt.js';
-import decrypt from './utils/decrypt.js';
-import { 
+import {
     encrypt as imageCipherEncrypt, 
     decrypt as imageCipherDecrypt, 
     processBatch, 
@@ -116,13 +114,6 @@ const { clear } = flags;
 				msg: `Image decrypted successfully:\nOutput: ${result.outputPath}\nMethod: ${result.method}`
 			});
 			return;
-		}
-
-		// Fallback to original behavior if no new flags are used
-		if (flags.encrypt) {
-			await encrypt(flags);
-		} else if (flags.decrypt) {
-			await decrypt(flags);
 		}
 
 	} catch (error) {
