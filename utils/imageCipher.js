@@ -154,22 +154,28 @@ async function decryptWithXOR(inputPath, outputPath = null, options = {}) {
 }
 
 async function encrypt(inputPath, outputPath = null, options = {}) {
-	// Check if password-based encryption is requested
+	if (options.algorithm === 'xor') {
+		return await encryptWithXOR(inputPath, outputPath, options);
+	}
+	if (options.algorithm === 'aes' && !options.password) {
+		throw new Error('AES encryption requires --password/-p');
+	}
 	if (options.password) {
 		return await encryptWithPasswordMethod(inputPath, outputPath, options);
 	}
-
-	// Use existing XOR encryption method
 	return await encryptWithXOR(inputPath, outputPath, options);
 }
 
 async function decrypt(inputPath, outputPath = null, options = {}) {
-	// Check if password-based decryption is requested
+	if (options.algorithm === 'xor') {
+		return await decryptWithXOR(inputPath, outputPath, options);
+	}
+	if (options.algorithm === 'aes' && !options.password) {
+		throw new Error('AES decryption requires --password/-p');
+	}
 	if (options.password) {
 		return await decryptWithPasswordMethod(inputPath, outputPath, options);
 	}
-
-	// Use existing XOR decryption method
 	return await decryptWithXOR(inputPath, outputPath, options);
 }
 
