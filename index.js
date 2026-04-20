@@ -84,7 +84,7 @@ const { clear } = flags;
 			// Generate password if requested
 			if (flags.generatePassword) {
 				flags.password = generateSecurePassword();
-				console.log(`🔑 Generated password: ${flags.password}`);
+				process.stderr.write(`🔑 Generated password: ${flags.password}\n`);
 			}
 
 			const result = await imageCipherEncrypt(flags.encrypt, flags.outputImageFileName, {
