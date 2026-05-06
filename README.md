@@ -197,9 +197,3 @@ cd ImageCipher
 npm install
 npm test
 ```
-
----
-
-**⭐ Star this project: [https://github.com/AdityaKrSingh26/ImageCipher](https://github.com/AdityaKrSingh26/ImageCipher)**
-
-*ImageCipher - Securing your images with modern cryptography.*
